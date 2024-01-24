@@ -18,6 +18,35 @@
     "entities": ["entities/*.ts"]
   }
 ]
+```
+
+- 在 src/config 文件下添加 config.default.ts 文件
+
+```ts
+import { MidwayConfig } from '@midwayjs/core';
+export default {
+  // use for cookie sign key, should change to your own and keep security
+  keys: '',
+  express: {
+    port: 7001,
+  },
+  typeorm: {
+    dataSource: {
+      default: {
+        type: 'mysql',
+        host: '',
+        port: ,
+        username: '',
+        password: '',
+        database: '',
+        synchronize: false, // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
+        logging: false,
+        // 或者扫描形式
+        entities: ['**/entity/*.entity{.ts,.js}'],
+      },
+    },
+  },
+} as MidwayConfig;
 
 ```
 
