@@ -42,6 +42,7 @@ export default {
         synchronize: false, // 如果第一次使用，不存在表，有同步的需求可以写 true，注意会丢数据
         logging: false,
         // 或者扫描形式
+        // 扫描好像会出问题，建议使用实体类引入的方式，entities: [Pig]
         entities: ['**/entity/*.entity{.ts,.js}'],
       },
     },
