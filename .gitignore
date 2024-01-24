@@ -13,3 +13,5 @@ run/
 *.un~
 .tsbuildinfo
 .tsbuildinfo.*
+src/entity/ormconfig.json
+src/config/config.default.ts
