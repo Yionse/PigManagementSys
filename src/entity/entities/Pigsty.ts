@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Pig } from './Pig';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('pigsty', { schema: 'pig_management' })
 export class Pigsty {
@@ -23,7 +22,4 @@ export class Pigsty {
 
   @Column('varchar', { name: 'OtherInfo', nullable: true, length: 255 })
   otherInfo: string | null;
-
-  @OneToMany(() => Pig, pig => pig.pigsty)
-  pigs: Pig[];
 }
