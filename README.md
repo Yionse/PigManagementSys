@@ -43,7 +43,8 @@ export default {
         logging: false,
         // 或者扫描形式
         // 扫描好像会出问题，建议使用实体类引入的方式，entities: [Pig]
-        entities: ['**/entity/*.entity{.ts,.js}'],
+        // entities: ['**/entity/*.entity{.ts,.js}'],
+        entities: [Pig]
       },
     },
   },

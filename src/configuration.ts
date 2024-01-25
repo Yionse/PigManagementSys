@@ -2,6 +2,8 @@ import { Configuration, App } from '@midwayjs/core';
 import * as express from '@midwayjs/express';
 import { join } from 'path';
 import * as orm from '@midwayjs/typeorm';
+import { AllErrorFilter } from './fliters/AllErrorFliter';
+import { GlobalMatchFilter } from './fliters/GlobalMatchFilter';
 
 @Configuration({
   imports: [express, orm],
@@ -11,5 +13,7 @@ export class MainConfiguration {
   @App('express')
   app: express.Application;
 
-  async onReady() {}
+  async onReady() {
+    this.app.useFilter([AllErrorFilter, GlobalMatchFilter]);
+  }
 }
