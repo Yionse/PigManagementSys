@@ -4,7 +4,11 @@ import { Repository } from 'typeorm';
 import { User } from '../entity/entities/User';
 
 @Provide()
+// 用户相关操作，都在该类中
 export class UserService {
+  private usernameLength = 100;
+  private passwordLength = 16;
+
   @InjectEntityModel(User)
   userModel: Repository<User>;
 
@@ -12,13 +16,8 @@ export class UserService {
   async register(newUser: User) {
     let user = new User();
     user = newUser;
-    try {
-      // 调用ORM中的方法，将实体同步至MySQL
-      await this.userModel.save(user);
-    } catch (error) {
-      // 可能会出现primaryKey冲突的情况，需要抛出异常，并在前端提示
-      throw new Error(error.message);
-    }
+    this.checkUsernameLength(user.username, user.password);
+    await this.userModel.save(user);
   }
 
   // 登录
@@ -50,9 +49,20 @@ export class UserService {
     password: string;
     username: string;
   }) {
+    this.checkUsernameLength(username, password);
     const user = await this.userModel.findOne({ where: { userId } });
     user.password = password;
     user.username = username;
     await this.userModel.save(user);
+  }
+
+  // 验证参数是否合法
+  private checkUsernameLength(username: string, password: string) {
+    if (username.length > this.usernameLength) {
+      // 抛出异常，提醒用户
+      throw new Error('用户名长度超出限制');
+    } else if (password.length > this.passwordLength) {
+      throw new Error('密码长度超出限制');
+    }
   }
 }
