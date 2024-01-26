@@ -8,7 +8,9 @@ export class PigstyService {
   @InjectEntityModel(Pigsty)
   pigstyModel: Repository<Pigsty>;
 
-  async list() {
-    return await this.pigstyModel.find({});
+  async add(newPigsty: Pigsty) {
+    let pigsty = new Pigsty();
+    pigsty = newPigsty;
+    await this.pigstyModel.save(pigsty);
   }
 }
