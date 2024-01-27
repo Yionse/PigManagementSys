@@ -1,13 +1,12 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Index('PigstyID', ['pigstyId'], {})
 @Entity('pig', { schema: 'pig_management' })
 export class Pig {
-  @Column('int', { primary: true, name: 'PigID' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'pigId' })
   pigId: number;
 
-  @Column('varchar', { name: 'Breed', nullable: true, length: 255 })
-  breed: string | null;
+  @Column('tinyint', { name: 'BreedId' })
+  breedId: number | null;
 
   @Column('varchar', { name: 'Gender', nullable: true, length: 10 })
   gender: string | null;
