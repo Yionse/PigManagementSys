@@ -7,20 +7,20 @@ export class Healthrecord {
   recordId: number;
 
   @Column('int', { name: 'PigID', nullable: true })
-  pigId: number | null;
+  pigId: number;
 
   @Column('varchar', { name: 'DiseaseName', nullable: true, length: 255 })
-  diseaseName: string | null;
+  diseaseName: string;
 
   @Column('text', { name: 'Symptoms', nullable: true })
-  symptoms: string | null;
+  symptoms: string;
 
   @Column('date', { name: 'TreatmentDate', nullable: true })
-  treatmentDate: string | null;
+  treatmentDate: string;
 
   @Column('varchar', { name: 'TreatmentMethod', nullable: true, length: 255 })
-  treatmentMethod: string | null;
+  treatmentMethod: string;
 
-  @Column('varchar', { name: 'DoctorName', nullable: true, length: 255 })
-  doctorName: string | null;
+  @Column('varchar', { name: 'DoctorId', nullable: true, length: 255 })
+  doctorId: string;
 }
