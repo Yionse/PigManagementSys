@@ -16,14 +16,14 @@ export class UserController {
   async register(@Body() registerData: Userinfo) {
     await this.userService.register(registerData as User);
     this.ctx.statusMessage = '注册成功';
-    return {};
+    return { isSuccess: true };
   }
 
   @Post('/login')
   async login(@Body() loginData: { username: string; password: string }) {
     await this.userService.login(loginData);
     this.ctx.statusMessage = '登陆成功';
-    return {};
+    return { isLogin: true };
   }
 
   @Post('/update')
@@ -32,6 +32,6 @@ export class UserController {
   ) {
     await this.userService.update(updateData);
     this.ctx.statusMessage = '修改成功';
-    return {};
+    return { isSuccess: true };
   }
 }
