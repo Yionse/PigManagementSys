@@ -8,7 +8,7 @@ export class GlobalMatchFilter {
     return {
       code: ctx.statusCode || 200,
       message: ctx.statusMessage || '请求成功',
-      data: value,
+      result: value,
     };
   }
 }

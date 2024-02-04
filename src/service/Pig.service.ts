@@ -1,12 +1,24 @@
-import { Provide } from '@midwayjs/core';
+import { Inject, Provide } from '@midwayjs/core';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { Pig } from '../entity/entities/Pig';
+import { Exitrecord } from '../entity/entities/Exitrecord';
+import { Pigsty } from '../entity/entities/Pigsty';
+import { PigstyService } from './Pigsty.service';
 
 @Provide()
 export class PigService {
   @InjectEntityModel(Pig)
   pigModel: Repository<Pig>;
+
+  @InjectEntityModel(Pigsty)
+  pigstyModel: Repository<Pigsty>;
+
+  @InjectEntityModel(Exitrecord)
+  exit: Repository<Exitrecord>;
+
+  @Inject()
+  pigstyService: PigstyService;
 
   // 修改种猪信息
   async update({ pigId, ...updateData }: Pig) {
@@ -14,6 +26,7 @@ export class PigService {
     const pig = await this.pigModel.findOne({ where: { pigId } });
     // 将新的信息覆盖旧的
     Object.assign(pig, updateData);
+    await this.pigstyService.exit(updateData.pigstyId);
     // 调用数据库实体进行保存操作
     await this.pigModel.save(pig);
   }
@@ -22,6 +35,7 @@ export class PigService {
   async add(newPigData: Pig) {
     let pig = new Pig();
     pig = { ...newPigData };
+    await this.pigstyService.entry(newPigData.pigstyId);
     await this.pigModel.save(pig);
   }
 }

@@ -53,4 +53,16 @@ export class PigstyController {
     await this.pigstyModel.save(pigsty);
     return await this.utils.send(this.ctx, '修改成功');
   }
+
+  @Post('/entry')
+  async entry(@Body('pigstyId') pigstyId: number) {
+    await this.pigstyService.entry(pigstyId);
+    return this.utils.send(this.ctx, '入栏成功');
+  }
+
+  @Post('/exit')
+  async exit(@Body('pigstyId') pigstyId: number) {
+    await this.pigstyService.exit(pigstyId);
+    return this.utils.send(this.ctx, '出栏成功');
+  }
 }

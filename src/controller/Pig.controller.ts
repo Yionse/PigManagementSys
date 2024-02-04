@@ -5,6 +5,9 @@ import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Pig } from '../entity/entities/Pig';
 import { Repository } from 'typeorm';
 import { PigService } from '../service/Pig.service';
+import { Pigsty } from '../entity/entities/Pigsty';
+import { Entryrecord } from '../entity/entities/Entryrecord';
+import { BreedType } from '../entity/entities/BreedType';
 
 @Controller('/pig')
 export class PigController {
@@ -17,6 +20,15 @@ export class PigController {
   @InjectEntityModel(Pig)
   pigModel: Repository<Pig>;
 
+  @InjectEntityModel(Pigsty)
+  pigsty: Repository<Pigsty>;
+
+  @InjectEntityModel(Entryrecord)
+  entry: Repository<Entryrecord>;
+
+  @InjectEntityModel(BreedType)
+  breedTypeModel: Repository<BreedType>;
+
   @Inject()
   pigService: PigService;
 
@@ -24,7 +36,8 @@ export class PigController {
   @Get('/list')
   async list() {
     return await this.utils.send(this.ctx, '查询成功', 200, {
-      data: await this.pigModel.find({}),
+      pig: await this.pigModel.find({}),
+      pigsty: await this.pigsty.find({}),
     });
   }
 
@@ -38,7 +51,6 @@ export class PigController {
   // 添加种猪信息
   @Post('/add')
   async add(@Body() PigData: Pig) {
-    console.log(PigData, '1111');
     await this.pigService.add(PigData);
     return this.utils.send(this.ctx, '新增成功');
   }
@@ -48,5 +60,10 @@ export class PigController {
   async del(@Body() { batchId }: { batchId: number[] }) {
     await this.pigModel.delete(batchId);
     return this.utils.send(this.ctx, '删除成功');
+  }
+
+  @Get('/breed')
+  async breed() {
+    return await this.breedTypeModel.find({});
   }
 }

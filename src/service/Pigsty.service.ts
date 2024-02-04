@@ -13,4 +13,20 @@ export class PigstyService {
     pigsty = newPigsty;
     await this.pigstyModel.save(pigsty);
   }
+
+  async entry(pigstyId: number) {
+    const pigsty = await this.pigstyModel.findOne({
+      where: { pigstyId },
+    });
+    pigsty.currentPopulation += 1;
+    await this.pigstyModel.save(pigsty);
+  }
+
+  async exit(pigstyId: number) {
+    const pigsty = await this.pigstyModel.findOne({
+      where: { pigstyId },
+    });
+    pigsty.currentPopulation -= 1;
+    await this.pigstyModel.save(pigsty);
+  }
 }
