@@ -66,4 +66,18 @@ export class PigController {
   async breed() {
     return await this.breedTypeModel.find({});
   }
+
+  @Post('/breedDel')
+  async breedDel(@Body('breedId') breedId: number) {
+    await this.breedTypeModel.delete([breedId]);
+    return this.utils.send(this.ctx, '删除品种成功');
+  }
+
+  @Post('/breedAdd')
+  async breedAdd(@Body('breedName') breedName: string) {
+    const breedType = new BreedType();
+    breedType.breedName = breedName;
+    this.breedTypeModel.save(breedType);
+    return this.utils.send(this.ctx, '新增品种成功');
+  }
 }
