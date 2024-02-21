@@ -19,7 +19,6 @@ export class DoctorController {
   @Get('/list')
   async list() {
     const res = await this.doctorsModel.find({}); // 查询医生列表
-    console.log(res); // 输出查询结果到控制台
     return this.utils.send(this.ctx, '返回医生列表成功', 200, { data: res }); // 返回查询结果
   }
 

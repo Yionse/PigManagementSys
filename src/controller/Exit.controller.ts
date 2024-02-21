@@ -3,18 +3,18 @@ import { Context } from '@midwayjs/express';
 import { UtilsModule } from '../utils/Utils';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
-import { Entryrecord } from '../entity/entities/Entryrecord';
+import { Exitrecord } from '../entity/entities/Exitrecord';
 
-@Controller('/entry')
-export class EntryController {
+@Controller('/exit')
+export class ExitController {
   @Inject()
   utils: UtilsModule; // 注入工具模块
 
   @Inject()
   ctx: Context; // 注入上下文对象
 
-  @InjectEntityModel(Entryrecord)
-  model: Repository<Entryrecord>; // 注入实体模型
+  @InjectEntityModel(Exitrecord)
+  model: Repository<Exitrecord>; // 注入实体模型
 
   @Get('/list')
   async list() {
@@ -23,8 +23,8 @@ export class EntryController {
   }
 
   // @Post('/add')
-  // async add(@Body() newData: Entryrecord) {
-  //   let modelData = new Entryrecord(); // 创建新的入职记录对象
+  // async add(@Body() newData: Exitrecord) {
+  //   let modelData = new Exitrecord(); // 创建新的入职记录对象
   //   modelData = {
   //     ...newData,
   //   }; // 复制属性
@@ -33,7 +33,7 @@ export class EntryController {
   // }
 
   // @Post('/update')
-  // async update(@Body() { recordId, ...updateData }: Entryrecord) {
+  // async update(@Body() { recordId, ...updateData }: Exitrecord) {
   //   const newModelData = await this.model.findOne({ where: { recordId } }); // 根据记录ID查找数据
   //   Object.assign(newModelData, updateData); // 更新数据
   //   await this.model.save(newModelData); // 保存更新后的数据
