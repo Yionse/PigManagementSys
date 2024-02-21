@@ -14,9 +14,6 @@ export class Breedingrecord {
   @Column('date', { name: 'BreedingDate', nullable: true })
   breedingDate: string | null;
 
-  @Column('date', { name: 'ExpectedDeliveryDate', nullable: true })
-  expectedDeliveryDate: string | null;
-
-  @Column('date', { name: 'DeliveryDate', nullable: true })
-  deliveryDate: string | null;
+  @Column('tinyint', { name: 'Count', nullable: true })
+  count: number;
 }

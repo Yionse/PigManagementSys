@@ -21,12 +21,14 @@ export class PigService {
   pigstyService: PigstyService;
 
   // 修改种猪信息
-  async update({ pigId, ...updateData }: Pig) {
+  async update({ pigId, ...updateData }: any) {
     // 找到对应的实体
     const pig = await this.pigModel.findOne({ where: { pigId } });
     // 将新的信息覆盖旧的
     Object.assign(pig, updateData);
-    await this.pigstyService.exit(updateData.pigstyId);
+    if (updateData?.isExit) {
+      await this.pigstyService.exit(updateData.pigstyId);
+    }
     // 调用数据库实体进行保存操作
     await this.pigModel.save(pig);
   }

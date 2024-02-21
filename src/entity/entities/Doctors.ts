@@ -7,4 +7,7 @@ export class Doctors {
 
   @Column('varchar', { name: 'doctorName', length: 100 })
   doctorName: string;
+
+  @Column('int', { name: 'totalHealing' })
+  totalHealing: number;
 }
