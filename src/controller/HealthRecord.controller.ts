@@ -4,11 +4,15 @@ import { Healthrecord } from '../entity/entities/Healthrecord';
 import { Repository } from 'typeorm';
 import { Context } from '@midwayjs/express';
 import { UtilsModule } from '../utils/Utils';
+import { Doctors } from '../entity/entities/Doctors';
 
 @Controller('/health')
 export class HealthController {
   @InjectEntityModel(Healthrecord)
   healthModel: Repository<Healthrecord>; // 注入健康记录实体模型
+
+  @InjectEntityModel(Doctors)
+  doctorModel: Repository<Doctors>;
 
   @Inject()
   ctx: Context; // 注入上下文对象
@@ -29,6 +33,11 @@ export class HealthController {
       ...healthRecord,
     }; // 复制属性
     await this.healthModel.save(newData); // 保存新增的健康记录
+    const doctor = await this.doctorModel.find({
+      where: { doctorId: Number(healthRecord.doctorId) },
+    });
+    doctor[0].totalHealing += 1;
+    await this.doctorModel.save(doctor);
     return this.utils.send(this.ctx, '新增成功'); // 返回新增成功信息
   }
 
