@@ -6,8 +6,8 @@ export class Healthrecord {
   @Column('int', { primary: true, name: 'RecordID' })
   recordId: number;
 
-  @Column('int', { name: 'PigID', nullable: true })
-  pigId: number;
+  @Column('char', { name: 'PigID', nullable: true })
+  pigId: string;
 
   @Column('varchar', { name: 'DiseaseName', nullable: true, length: 255 })
   diseaseName: string;

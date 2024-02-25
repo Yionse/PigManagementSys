@@ -34,7 +34,7 @@ export class HealthController {
     }; // 复制属性
     await this.healthModel.save(newData); // 保存新增的健康记录
     const doctor = await this.doctorModel.find({
-      where: { doctorId: Number(healthRecord.doctorId) },
+      where: { doctorId: healthRecord.doctorId },
     });
     doctor[0].totalHealing += 1;
     await this.doctorModel.save(doctor);

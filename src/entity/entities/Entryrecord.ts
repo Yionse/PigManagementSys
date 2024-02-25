@@ -6,8 +6,8 @@ export class Entryrecord {
   @Column('int', { primary: true, name: 'RecordID' })
   recordId: number;
 
-  @Column('int', { name: 'PigID', nullable: true })
-  pigId: number | null;
+  @Column('char', { name: 'PigID' })
+  pigId: string | null;
 
   @Column('date', { name: 'EntryDate', nullable: true })
   entryDate: string | null;

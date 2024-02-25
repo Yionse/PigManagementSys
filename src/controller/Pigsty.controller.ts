@@ -65,14 +65,14 @@ export class PigstyController {
 
   // 处理 POST 请求，猪进入指定猪圈
   @Post('/entry')
-  async entry(@Body('pigstyId') pigstyId: number) {
+  async entry(@Body('pigstyId') pigstyId: string) {
     await this.pigstyService.entry(pigstyId);
     return this.utils.send(this.ctx, '入栏成功');
   }
 
   // 处理 POST 请求，猪离开指定猪圈
   @Post('/exit')
-  async exit(@Body('pigstyId') pigstyId: number) {
+  async exit(@Body('pigstyId') pigstyId: string) {
     await this.pigstyService.exit(pigstyId);
     return this.utils.send(this.ctx, '出栏成功');
   }

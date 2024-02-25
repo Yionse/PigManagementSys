@@ -5,6 +5,7 @@ import { Pig } from '../entity/entities/Pig';
 import { Exitrecord } from '../entity/entities/Exitrecord';
 import { Pigsty } from '../entity/entities/Pigsty';
 import { PigstyService } from './Pigsty.service';
+import { UtilsModule } from '../utils/Utils';
 
 @Provide()
 export class PigService {
@@ -19,6 +20,9 @@ export class PigService {
 
   @Inject()
   pigstyService: PigstyService;
+
+  @Inject()
+  utils: UtilsModule;
 
   // 修改种猪信息
   async update({ pigId, ...updateData }: any) {

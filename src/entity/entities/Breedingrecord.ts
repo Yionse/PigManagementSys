@@ -5,11 +5,11 @@ export class Breedingrecord {
   @Column('int', { primary: true, name: 'RecordID' })
   recordId: number;
 
-  @Column('int', { name: 'BoarID', nullable: true })
-  boarId: number | null;
+  @Column('char', { name: 'BoarID', nullable: true })
+  boarId: string;
 
-  @Column('int', { name: 'SowID', nullable: true })
-  sowId: number | null;
+  @Column('char', { name: 'SowID', nullable: true })
+  sowId: string;
 
   @Column('date', { name: 'BreedingDate', nullable: true })
   breedingDate: string | null;

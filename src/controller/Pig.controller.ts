@@ -38,10 +38,26 @@ export class PigController {
   pigService: PigService; // 注入种猪服务
 
   // 获取当前种猪列表
-  @Get('/list')
-  async list() {
+  @Post('/list')
+  async list(@Body() PigData: any) {
     return await this.utils.send(this.ctx, '查询成功', 200, {
-      pig: await this.pigModel.find({}),
+      pig: (
+        await this.pigModel.find({
+          where: {
+            gender: PigData?.gender,
+            pigstyId: PigData?.pigstyId,
+            breedId: PigData?.breedId,
+          },
+        })
+      ).filter(item => {
+        if (!PigData?.isHere) {
+          return true;
+        } else if (PigData?.isHere === 1) {
+          return item.exitDate === null;
+        } else {
+          return item.exitDate !== null;
+        }
+      }),
       pigsty: await this.pigstyModel.find({}),
     });
   }
@@ -64,14 +80,16 @@ export class PigController {
   // 添加种猪信息
   @Post('/add')
   async add(@Body() PigData: any) {
+    const pigId = `PIG${this.utils.getEmailCode()}`;
+    PigData.pigId = pigId;
     await this.pigService.add(PigData); // 调用种猪服务添加种猪信息
     const newEntryRecord = new Entryrecord();
     newEntryRecord.entryReason = PigData?.entryReason || '买入';
     newEntryRecord.entryDate = moment().format('YYYY-MM-DD');
     const pigList = await this.pigModel.find({
-      where: { entryDate: moment().format('YYYY-MM-DD') },
+      where: { pigId },
     });
-    newEntryRecord.pigId = pigList[pigList.length - 1]?.pigId;
+    newEntryRecord.pigId = pigList[0]?.pigId;
     await this.entryModel.save(newEntryRecord); // 保存入栏记录
     return this.utils.send(this.ctx, '新增成功'); // 返回新增成功信息
   }

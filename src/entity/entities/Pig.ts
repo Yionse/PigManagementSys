@@ -1,9 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('pig', { schema: 'pig_management' })
 export class Pig {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'pigId' })
-  pigId: number;
+  @PrimaryColumn({ type: 'char', name: 'pigId' })
+  pigId: string;
 
   @Column('tinyint', { name: 'BreedId' })
   breedId: number | null;
@@ -23,6 +23,6 @@ export class Pig {
   @Column('varchar', { name: 'OtherInfo', nullable: true, length: 255 })
   otherInfo: string | null;
 
-  @Column('int', { name: 'PigstyID', nullable: true })
-  pigstyId: number | null;
+  @Column('char', { name: 'PigstyID', nullable: true })
+  pigstyId: string | null;
 }

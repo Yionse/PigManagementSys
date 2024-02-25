@@ -26,6 +26,7 @@ export class DoctorController {
   async add(@Body('doctorName') doctorName: string) {
     const doctor = new Doctors(); // 创建医生对象
     doctor.doctorName = doctorName; // 设置医生姓名
+    doctor.doctorId = `DOCTOR${this.utils.getEmailCode()}`;
     await this.doctorsModel.save(doctor); // 保存新增的医生
     return this.utils.send(this.ctx, '新增成功'); // 返回新增成功信息
   }
