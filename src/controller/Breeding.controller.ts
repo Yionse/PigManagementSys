@@ -3,25 +3,25 @@ import { Context } from '@midwayjs/express';
 import { UtilsModule } from '../utils/Utils';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
-import { Breedingrecord } from '../entity/entities/Breedingrecord';
+import { Breeding } from '../entity/entities/Breeding';
 
-@Controller('/breeding')
-export class BreedingRecordController {
+@Controller('/breedings')
+export class BreedingController {
   @Inject()
   utils: UtilsModule; // 注入工具模块
 
   @Inject()
   ctx: Context; // 注入上下文对象
 
-  @InjectEntityModel(Breedingrecord)
-  breedModel: Repository<Breedingrecord>; // 注入实体模型
+  @InjectEntityModel(Breeding)
+  breedModel: Repository<Breeding>; // 注入实体模型
 
   @Post('/list')
   async list(@Body() filter: any) {
     const res = await this.breedModel.find({
       where: {
-        type: filter?.type,
-        sowId: filter?.sowId,
+        boarId: filter?.boarId,
+        sowID: filter?.sowId,
         status: filter?.status,
       },
     }); // 查询数据
@@ -29,7 +29,7 @@ export class BreedingRecordController {
   }
 
   @Post('/update')
-  async update(@Body() { recordId, ...updateData }: Breedingrecord) {
+  async update(@Body() { recordId, ...updateData }: Breeding) {
     const newModelData = await this.breedModel.findOne({ where: { recordId } }); // 根据记录ID查找数据
     Object.assign(newModelData, updateData); // 更新数据
     await this.breedModel.save(newModelData); // 保存更新后的数据
@@ -43,9 +43,10 @@ export class BreedingRecordController {
   }
 
   @Post('/add')
-  async add(@Body() breeding: Breedingrecord) {
-    let newBreeding = new Breedingrecord(); // 创建新的养殖记录对象
+  async add(@Body() breeding: Breeding) {
+    let newBreeding = new Breeding(); // 创建新的养殖记录对象
     newBreeding = { ...breeding }; // 复制属性
+    newBreeding.EhId = `EH${this.utils.getEmailCode()}`;
     await this.breedModel.save(newBreeding); // 保存新增的养殖记录
     return this.utils.send(this.ctx, '新增成功'); // 返回新增成功信息
   }

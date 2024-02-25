@@ -5,15 +5,30 @@ export class Breedingrecord {
   @Column('int', { primary: true, name: 'RecordID' })
   recordId: number;
 
-  @Column('char', { name: 'BoarID', nullable: true })
-  boarId: string;
-
   @Column('char', { name: 'SowID', nullable: true })
   sowId: string;
 
-  @Column('date', { name: 'BreedingDate', nullable: true })
-  breedingDate: string | null;
+  @Column('char', { name: 'Status' })
+  status: string;
 
-  @Column('tinyint', { name: 'Count', nullable: true })
-  count: number;
+  @Column('char', { name: 'type' })
+  type: string;
+
+  @Column('int', { name: 'birthsCount' })
+  birthsCount: number;
+
+  @Column('int', { name: 'StatusDays' })
+  statusDays: number;
+
+  @Column('int', { name: 'loveDays' })
+  loveDays: number;
+
+  @Column('date', { name: 'customDate' })
+  customDate: string;
+
+  @Column('int', { name: 'timer' })
+  timer: number;
+
+  @Column('char', { name: 'market' })
+  market: string;
 }
